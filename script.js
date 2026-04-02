@@ -1,12 +1,14 @@
-const GEMINI_API_KEY = 'AIzaSyDcylABPSd9k5MFNRi78Y7dF6nAml0ScZc'; 
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+// ⚠️ Insert your Gemini API Key here
+const GEMINI_API_KEY = 'AIzaSyBc8YENXyaXqj5cB9Ppxll7rEfI7_tLOCc'; 
+
+// 1. FIXED MODEL: Using the current, active 2.5-flash model
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
 
 const chatBox = document.getElementById('chat-box');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const quickReplies = document.getElementById('quick-replies');
 
-// Top Bar Action Buttons
 const themeToggleBtn = document.getElementById('theme-toggle');
 const exportChatBtn = document.getElementById('export-chat');
 const clearChatBtn = document.getElementById('clear-chat');
@@ -18,8 +20,6 @@ window.onload = () => {
         addMessage("Hi there! I am MediBot, an AI symptom analyzer. Please describe your symptoms in detail so I can assist you.", "bot");
     }, 500);
 };
-
-// --- CORE CHAT LOGIC ---
 
 sendBtn.addEventListener('click', handleUserInput);
 userInput.addEventListener('keypress', (e) => {
@@ -44,7 +44,7 @@ function sendQuickReply(text) {
 }
 
 async function analyzeSymptoms(text) {
-    if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+    if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
         removeTypingIndicator();
         addMessage("<b>Developer Error:</b> Please add your Gemini API Key in script.js.", "bot");
         return;
@@ -53,7 +53,8 @@ async function analyzeSymptoms(text) {
     chatHistory.push({ "role": "user", "parts": [{ "text": text }] });
 
     const payload = {
-        "system_instruction": {
+        // 2. FIXED PAYLOAD: Must be strict camelCase "systemInstruction"
+        "systemInstruction": {
             "parts": [{ 
                 "text": "You are MediBot, an AI symptom checker. Analyze the user's symptoms and suggest potential conditions. Be professional, empathetic, and concise. Format with bolding and bullet points. Always end by advising them to consult a real doctor." 
             }]
@@ -68,6 +69,12 @@ async function analyzeSymptoms(text) {
             body: JSON.stringify(payload)
         });
 
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            console.error("Google API Error Details:", errorDetails);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         removeTypingIndicator();
         
@@ -77,14 +84,14 @@ async function analyzeSymptoms(text) {
         addMessage(formatText(botReply), "bot");
 
     } catch (error) {
+        console.error("Fetch failed:", error);
         removeTypingIndicator();
-        addMessage("Sorry, I'm having trouble connecting to the AI server. Check your connection.", "bot");
+        addMessage("Sorry, I'm having trouble connecting to the AI server. Check the developer console for exact details.", "bot");
     }
 }
 
 // --- NEW FEATURES ---
 
-// 1. Dark Mode Toggle
 themeToggleBtn.addEventListener('click', () => {
     const body = document.body;
     if (body.getAttribute('data-theme') === 'dark') {
@@ -96,7 +103,6 @@ themeToggleBtn.addEventListener('click', () => {
     }
 });
 
-// 2. Export Chat to TXT File
 exportChatBtn.addEventListener('click', () => {
     if (chatHistory.length === 0) {
         alert("No chat history to export yet!");
@@ -118,18 +124,16 @@ exportChatBtn.addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
-// 3. Clear Chat History
 clearChatBtn.addEventListener('click', () => {
     if(confirm("Are you sure you want to clear the conversation?")) {
         chatBox.innerHTML = '';
         chatHistory = [];
-        quickReplies.style.display = 'flex'; // Bring back quick replies
+        quickReplies.style.display = 'flex'; 
         setTimeout(() => {
             addMessage("Chat cleared. How can I help you today?", "bot");
         }, 300);
     }
 });
-
 
 // --- UI HELPER FUNCTIONS ---
 
@@ -144,6 +148,7 @@ function addMessage(text, sender) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message', sender === 'user' ? 'user-msg' : 'bot-msg');
     msgDiv.innerHTML = text; 
+    
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
