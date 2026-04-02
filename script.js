@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; 
+const GEMINI_API_KEY = 'AIzaSyDcylABPSd9k5MFNRi78Y7dF6nAml0ScZc'; 
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 const chatBox = document.getElementById('chat-box');
