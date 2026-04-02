@@ -5,30 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Symptom Checker | INT 428</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <div class="chat-container">
         <div class="chat-header">
-            <div class="bot-avatar">🤖</div>
-            <div class="header-info">
-                <h2>MediBot AI</h2>
-                <p>Symptom Checker (Project INT 428)</p>
+            <div class="header-left">
+                <div class="bot-avatar">
+                    <i class="fa-solid fa-stethoscope"></i>
+                </div>
+                <div class="header-info">
+                    <h2>MediBot AI</h2>
+                    <p>Clinical Symptom Analyzer</p>
+                </div>
             </div>
+            <div class="header-actions">
+                <button id="theme-toggle" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button id="export-chat" title="Download Consultation"><i class="fa-solid fa-download"></i></button>
+                <button id="clear-chat" title="Clear Chat"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>
+
+        <div class="medical-disclaimer">
+            <i class="fa-solid fa-triangle-exclamation"></i> 
+            <span><b>Notice:</b> AI generated analysis. Consult a physician for medical advice.</span>
         </div>
 
         <div class="chat-box" id="chat-box">
             </div>
 
         <div class="quick-replies" id="quick-replies">
-            <button class="pill-btn" onclick="sendQuickReply('I have a headache and fever')">Headache & Fever</button>
-            <button class="pill-btn" onclick="sendQuickReply('My stomach hurts and I feel nauseous')">Stomach Pain</button>
+            <button class="pill-btn" onclick="sendQuickReply('I have a severe headache and fever')"><i class="fa-solid fa-head-side-virus"></i> Headache & Fever</button>
+            <button class="pill-btn" onclick="sendQuickReply('My stomach hurts and I feel nauseous')"><i class="fa-solid fa-virus-covid"></i> Stomach Pain</button>
         </div>
 
         <div class="chat-input-area">
-            <input type="text" id="user-input" placeholder="Type your symptoms here..." autocomplete="off">
+            <input type="text" id="user-input" placeholder="Describe your symptoms..." autocomplete="off">
             <button id="send-btn">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>
     </div>
