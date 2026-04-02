@@ -1,7 +1,6 @@
-// ⚠️ Insert your Gemini API Key here
+// ⚠️ Insert your BRAND NEW Gemini API Key here (don't push to public Github!)
 const GEMINI_API_KEY = 'AIzaSyBc8YENXyaXqj5cB9Ppxll7rEfI7_tLOCc'; 
 
-// 1. FIXED MODEL: Using the current, active 2.5-flash model
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
 
 const chatBox = document.getElementById('chat-box');
@@ -17,7 +16,7 @@ let chatHistory = [];
 
 window.onload = () => {
     setTimeout(() => {
-        addMessage("Hi there! I am MediBot, an AI symptom analyzer. Please describe your symptoms in detail so I can assist you.", "bot");
+        addMessage("Hi there! I am MediBot, an AI symptom analyzer. Please review the safety warnings on the left, and describe your symptoms in detail.", "bot");
     }, 500);
 };
 
@@ -53,7 +52,6 @@ async function analyzeSymptoms(text) {
     chatHistory.push({ "role": "user", "parts": [{ "text": text }] });
 
     const payload = {
-        // 2. FIXED PAYLOAD: Must be strict camelCase "systemInstruction"
         "systemInstruction": {
             "parts": [{ 
                 "text": "You are MediBot, an AI symptom checker. Analyze the user's symptoms and suggest potential conditions. Be professional, empathetic, and concise. Format with bolding and bullet points. Always end by advising them to consult a real doctor." 
@@ -70,8 +68,6 @@ async function analyzeSymptoms(text) {
         });
 
         if (!response.ok) {
-            const errorDetails = await response.json();
-            console.error("Google API Error Details:", errorDetails);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
@@ -86,11 +82,11 @@ async function analyzeSymptoms(text) {
     } catch (error) {
         console.error("Fetch failed:", error);
         removeTypingIndicator();
-        addMessage("Sorry, I'm having trouble connecting to the AI server. Check the developer console for exact details.", "bot");
+        addMessage("Sorry, I'm having trouble connecting to the AI server. Please try again.", "bot");
     }
 }
 
-// --- NEW FEATURES ---
+// --- TOP BAR FEATURES ---
 
 themeToggleBtn.addEventListener('click', () => {
     const body = document.body;

@@ -3,49 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Symptom Checker | INT 428</title>
+    <title>MediBot AI | INT 428</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="header-left">
-                <div class="bot-avatar">
-                    <i class="fa-solid fa-stethoscope"></i>
+    <div class="app-wrapper">
+        
+        <aside class="glass-sidebar">
+            <div class="sidebar-header">
+                <div class="icon-top"><i class="fa-solid fa-heart-pulse"></i></div>
+                <h1>AI Triage Assistant</h1>
+                <div class="badges">
+                    <span><i class="fa-solid fa-check"></i> 24/7</span>
+                    <span><i class="fa-solid fa-shield-halved"></i> Confidential</span>
                 </div>
-                <div class="header-info">
-                    <h2>MediBot AI</h2>
-                    <p>Clinical Symptom Analyzer</p>
+            </div>
+
+            <div class="sidebar-section tips-section">
+                <h3><i class="fa-solid fa-lightbulb"></i> Pro Tips</h3>
+                <ul>
+                    <li><b>Be Specific:</b> Describe exactly how it feels (e.g., sharp, dull).</li>
+                    <li><b>Duration:</b> Mention how long you've felt this way.</li>
+                    <li><b>Context:</b> Add recent travel or activities.</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section warning-section">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Emergency Warnings</h3>
+                <p>Call emergency services immediately if you experience:</p>
+                <ul>
+                    <li>Severe chest pain or pressure</li>
+                    <li>Difficulty breathing</li>
+                    <li>Sudden numbness or weakness</li>
+                    <li>Loss of consciousness</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="chat-container">
+            <div class="chat-header">
+                <div class="header-left">
+                    <div class="bot-avatar">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <div class="header-info">
+                        <h2>MediBot AI</h2>
+                        <p>Clinical Symptom Analyzer</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="theme-toggle" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                    <button id="export-chat" title="Download Consultation"><i class="fa-solid fa-download"></i></button>
+                    <button id="clear-chat" title="Clear Chat"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
             </div>
-            <div class="header-actions">
-                <button id="theme-toggle" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
-                <button id="export-chat" title="Download Consultation"><i class="fa-solid fa-download"></i></button>
-                <button id="clear-chat" title="Clear Chat"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-        </div>
 
-        <div class="medical-disclaimer">
-            <i class="fa-solid fa-triangle-exclamation"></i> 
-            <span><b>Notice:</b> AI generated analysis. Consult a physician for medical advice.</span>
-        </div>
+            <div class="chat-box" id="chat-box">
+                </div>
 
-        <div class="chat-box" id="chat-box">
+            <div class="quick-replies" id="quick-replies">
+                <button class="pill-btn" onclick="sendQuickReply('I have a severe headache and fever')"><i class="fa-solid fa-head-side-virus"></i> Headache & Fever</button>
+                <button class="pill-btn" onclick="sendQuickReply('My stomach hurts and I feel nauseous')"><i class="fa-solid fa-virus-covid"></i> Stomach Pain</button>
             </div>
 
-        <div class="quick-replies" id="quick-replies">
-            <button class="pill-btn" onclick="sendQuickReply('I have a severe headache and fever')"><i class="fa-solid fa-head-side-virus"></i> Headache & Fever</button>
-            <button class="pill-btn" onclick="sendQuickReply('My stomach hurts and I feel nauseous')"><i class="fa-solid fa-virus-covid"></i> Stomach Pain</button>
-        </div>
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Describe your symptoms..." autocomplete="off">
+                <button id="send-btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </main>
 
-        <div class="chat-input-area">
-            <input type="text" id="user-input" placeholder="Describe your symptoms..." autocomplete="off">
-            <button id="send-btn">
-                <i class="fa-solid fa-paper-plane"></i>
-            </button>
-        </div>
     </div>
 
     <script src="script.js"></script>
